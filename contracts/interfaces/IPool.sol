@@ -734,4 +734,17 @@ interface IPool {
    *   0 if the action is executed directly by the user, without any middle-man
    */
   function deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode) external;
+
+  /**
+   * @notice Sets the borrow hook contract address for custom access control logic
+   * @dev Only callable by the PoolConfigurator contract
+   * @param hook The address of the borrow hook contract (address(0) to disable)
+   */
+  function setBorrowHook(address hook) external;
+
+  /**
+   * @notice Returns the current borrow hook contract address
+   * @return The address of the borrow hook contract (address(0) if not set)
+   */
+  function getBorrowHook() external view returns (address);
 }

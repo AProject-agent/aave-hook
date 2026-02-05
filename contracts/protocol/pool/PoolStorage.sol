@@ -48,4 +48,7 @@ contract PoolStorage {
 
   // Maximum number of active reserves there have been in the protocol. It is the upper bound of the reserves list
   uint16 internal _reservesCount;
+
+  // Address of the borrow hook contract for custom access control logic
+  address internal _borrowHook;
 }
