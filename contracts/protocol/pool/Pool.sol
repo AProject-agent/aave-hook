@@ -753,6 +753,7 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
   /// @inheritdoc IPool
   function setBorrowHook(address hook) external virtual override onlyPoolConfigurator {
     _borrowHook = hook;
+    emit BorrowHookSet(hook);
   }
 
   /// @inheritdoc IPool

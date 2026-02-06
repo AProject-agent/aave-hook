@@ -211,6 +211,12 @@ interface IPool {
   event MintedToTreasury(address indexed reserve, uint256 amountMinted);
 
   /**
+   * @dev Emitted when the borrow hook is updated.
+   * @param newHook The address of the new borrow hook
+   */
+  event BorrowHookSet(address indexed newHook);
+
+  /**
    * @notice Mints an `amount` of aTokens to the `onBehalfOf`
    * @param asset The address of the underlying asset to mint
    * @param amount The amount to mint
