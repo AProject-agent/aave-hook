@@ -161,6 +161,7 @@ export enum ProtocolErrors {
   SILOED_BORROWING_VIOLATION = '89', // user is trying to violate the siloed borrowing rule
   RESERVE_DEBT_NOT_ZERO = '90', // the total debt of the reserve needs to be 0
   FLASHLOAN_DISABLED = '91', // FlashLoaning for this asset is disabled
+  BORROW_HOOK_REJECTED = '92', // Borrow hook rejected the borrow operation
   // SafeCast
   SAFECAST_UINT128_OVERFLOW = "SafeCast: value doesn't fit in 128 bits",
 

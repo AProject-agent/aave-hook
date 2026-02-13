@@ -483,6 +483,11 @@ contract PoolConfigurator is VersionedInitializable, IPoolConfigurator {
     require(totalDebt == 0, Errors.RESERVE_DEBT_NOT_ZERO);
   }
 
+  /// @inheritdoc IPoolConfigurator
+  function setBorrowHook(address hook) external override onlyPoolAdmin {
+    _pool.setBorrowHook(hook);
+  }
+
   function _onlyPoolAdmin() internal view {
     IACLManager aclManager = IACLManager(_addressesProvider.getACLManager());
     require(aclManager.isPoolAdmin(msg.sender), Errors.CALLER_NOT_POOL_ADMIN);

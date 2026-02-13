@@ -17,6 +17,7 @@ import {IERC20WithPermit} from '../../interfaces/IERC20WithPermit.sol';
 import {IPoolAddressesProvider} from '../../interfaces/IPoolAddressesProvider.sol';
 import {IPool} from '../../interfaces/IPool.sol';
 import {IACLManager} from '../../interfaces/IACLManager.sol';
+import {IBorrowHook} from '../../interfaces/IBorrowHook.sol';
 import {PoolStorage} from './PoolStorage.sol';
 
 /**
@@ -223,6 +224,20 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
     uint16 referralCode,
     address onBehalfOf
   ) public virtual override {
+    // Call borrow hook if set
+    if (_borrowHook != address(0)) {
+      require(
+        IBorrowHook(_borrowHook).beforeBorrow(
+          msg.sender,
+          onBehalfOf,
+          asset,
+          amount,
+          interestRateMode
+        ),
+        Errors.BORROW_HOOK_REJECTED
+      );
+    }
+
     BorrowLogic.executeBorrow(
       _reserves,
       _reservesList,
@@ -733,5 +748,16 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
         referralCode: referralCode
       })
     );
+  }
+
+  /// @inheritdoc IPool
+  function setBorrowHook(address hook) external virtual override onlyPoolConfigurator {
+    _borrowHook = hook;
+    emit BorrowHookSet(hook);
+  }
+
+  /// @inheritdoc IPool
+  function getBorrowHook() external view virtual override returns (address) {
+    return _borrowHook;
   }
 }

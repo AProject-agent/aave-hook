@@ -483,4 +483,10 @@ interface IPoolConfigurator {
    * @param siloed The new siloed borrowing state
    */
   function setSiloedBorrowing(address asset, bool siloed) external;
+
+  /**
+   * @notice Sets the borrow hook for the pool
+   * @param hook The address of the borrow hook contract (or zero address to disable)
+   */
+  function setBorrowHook(address hook) external;
 }

@@ -211,6 +211,12 @@ interface IPool {
   event MintedToTreasury(address indexed reserve, uint256 amountMinted);
 
   /**
+   * @dev Emitted when the borrow hook is updated.
+   * @param newHook The address of the new borrow hook
+   */
+  event BorrowHookSet(address indexed newHook);
+
+  /**
    * @notice Mints an `amount` of aTokens to the `onBehalfOf`
    * @param asset The address of the underlying asset to mint
    * @param amount The amount to mint
@@ -734,4 +740,17 @@ interface IPool {
    *   0 if the action is executed directly by the user, without any middle-man
    */
   function deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode) external;
+
+  /**
+   * @notice Sets the borrow hook contract address for custom access control logic
+   * @dev Only callable by the PoolConfigurator contract
+   * @param hook The address of the borrow hook contract (address(0) to disable)
+   */
+  function setBorrowHook(address hook) external;
+
+  /**
+   * @notice Returns the current borrow hook contract address
+   * @return The address of the borrow hook contract (address(0) if not set)
+   */
+  function getBorrowHook() external view returns (address);
 }
